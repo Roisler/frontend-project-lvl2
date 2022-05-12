@@ -3,6 +3,9 @@ import { readFileSync } from 'fs';
 import getFixturePath from './getFixturePath.js';
 
 const genDiff = (filepath1, filepath2) => {
+  if (filepath1 === '' || filepath2 === '') {
+    return '';
+  }
   const file1 = JSON.parse(readFileSync(getFixturePath(filepath1), 'utf-8'));
   const file2 = JSON.parse(readFileSync(getFixturePath(filepath2), 'utf-8'));
   const keys1 = Object.keys(file1);
