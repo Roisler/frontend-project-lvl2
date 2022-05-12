@@ -9,5 +9,5 @@ jobs:
         run: npm install eslint-config-airbnb-base
       - name: eslint
         run: make lint
+      - name: test-coverage
         run: make coverage
-        run: make test
