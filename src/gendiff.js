@@ -36,7 +36,6 @@ const genDiff = (filepath1, filepath2) => {
     }
   } */
   result = `{\n${result.trimEnd()}\n}`;
-  console.log(result);
   return result;
 };
 
