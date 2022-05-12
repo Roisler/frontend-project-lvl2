@@ -7,6 +7,6 @@ lint:
 gendiff:
 	node bin/gendiff.js
 test:
-	npm jest
+	npx jest
 coverage:
 	npx jest --coverage
