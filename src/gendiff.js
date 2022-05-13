@@ -1,13 +1,16 @@
 import _ from 'lodash';
 import { readFileSync } from 'fs';
 import getFixturePath from './getFixturePath.js';
+import { format, parseFile } from './parsers.js';
 
 const genDiff = (filepath1, filepath2) => {
   if (filepath1 === '' || filepath2 === '') {
     return '';
   }
-  const file1 = JSON.parse(readFileSync(getFixturePath(filepath1), 'utf-8'));
-  const file2 = JSON.parse(readFileSync(getFixturePath(filepath2), 'utf-8'));
+  const formatFile1 = format(filepath1);
+  const formatFile2 = format(filepath2);
+  const file1 = parseFile(readFileSync(getFixturePath(filepath1), 'utf-8'), formatFile1);
+  const file2 = parseFile(readFileSync(getFixturePath(filepath2), 'utf-8'), formatFile2);
   const keys1 = Object.keys(file1);
   const keys2 = Object.keys(file2);
   const keys = _.sortBy(_.union(keys1, keys2));
@@ -36,6 +39,7 @@ const genDiff = (filepath1, filepath2) => {
     }
   } */
   result = `{\n${result.trimEnd()}\n}`;
+  console.log(result);
   return result;
 };
 

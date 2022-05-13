@@ -12,10 +12,17 @@
   "scripts": {
     "test": "npx jest"
   },
-    "jest": {
-      "moduleFileExtensions": ["js", "jsx"],
-      "moduleDirectories": ["node_modules", "bower_components", "src"]
-    },
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "jsx"
+    ],
+    "moduleDirectories": [
+      "node_modules",
+      "bower_components",
+      "src"
+    ]
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Roisler/frontend-project-lvl2.git"
@@ -29,6 +36,7 @@
   "homepage": "https://github.com/Roisler/frontend-project-lvl2#readme",
   "dependencies": {
     "commander": "^9.2.0",
+    "js-yaml": "^4.1.0",
     "lodash": "^4.17.21"
   },
   "devDependencies": {
