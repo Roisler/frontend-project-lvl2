@@ -1,24 +1,32 @@
+import fs from 'fs';
+import path, { dirname } from 'path';
+import { fileURLToPath } from 'url';
 import yml from 'js-yaml';
-import { readFileSync } from 'fs';
+
 import genDiff from '../src/gendiff.js';
 import { parseFile } from '../src/parsers.js';
-import getFixturePath from '../src/getFixturePath.js';
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', filename);
+const readFile = (file) => fs.readFileSync(getFixturePath(file), 'utf-8');
+const result = readFile('nested.txt');
 const file1 = 'file1.json';
-
 const file2 = 'file2.json';
-const file4 = readFileSync(getFixturePath('file1.json'), 'utf-8');
-const file3 = readFileSync(getFixturePath('file1.yml'), 'utf-8');
-
+const file3 = 'file1.yml';
+const file4 = 'file2.yml';
 test('gendiff', () => {
-  expect(genDiff(file1, file2)).toEqual('{\n  - follow: false\n    host: hexlet.io\n  - proxy: 123.234.53.22\n  - timeout: 50\n  + timeout: 20\n  + verbose: true\n}');
+  expect(genDiff(file1, file2)).toEqual(result);
+  expect(genDiff(file3, file4)).toEqual(result);
   expect(genDiff('')).toEqual('');
   expect(genDiff('', file2)).toEqual('');
   expect(genDiff(file1, '')).toEqual('');
+  expect(genDiff(file1, file2, 'boom')).toEqual('Error');
 });
 
 test('parsers', () => {
-  expect(parseFile(file3, '.yml')).toEqual(yml.load(file3));
-  expect(parseFile(file4, '.json')).toEqual(JSON.parse(file4));
-  expect(parseFile(file4, '.ini')).toEqual(JSON.parse(file4));
+  expect(parseFile(readFile(file3), '.yml')).toEqual(yml.load(readFile(file3)));
+  expect(parseFile(readFile(file2), '.json')).toEqual(JSON.parse(readFile(file2)));
+  expect(parseFile(readFile(file2), '.ini')).toEqual(JSON.parse(readFile(file2)));
 });
