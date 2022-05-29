@@ -4,7 +4,7 @@ import { format, parseFile } from './parsers.js';
 import stylish from './stylish.js';
 import newAst from './newAst.js';
 
-const genDiff = (filepath1, filepath2, formatter) => {
+const genDiff = (filepath1, filepath2, formatter = 'stylish') => {
   if (filepath1 === '' || filepath2 === '') {
     return '';
   }
