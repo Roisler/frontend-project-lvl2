@@ -35,7 +35,7 @@ const treeToStr = (tree) => {
         return `${indent(depth)}- ${element.key}: ${oldVal}\n${indent(depth)}+ ${element.key}: ${newVal}`;
       }
       if (element.controlChanged === 'nested') {
-        return `${indent(depth)}  ${element.key}: {\n${iter(element.value, depth + 1)}\n${indent(depth)}  }`;
+        return `${indent(depth)}  ${element.key}: {\n${iter(element.children, depth + 1)}\n${indent(depth)}  }`;
       }
       return '';
     });

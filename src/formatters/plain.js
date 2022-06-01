@@ -33,7 +33,7 @@ const plain = (tree) => {
         return `Property '${fullPath}' was updated. From ${oldVal} to ${newVal}`;
       }
       if (element.controlChanged === 'nested') {
-        return iter(element.value, `${path}${element.key}.`);
+        return iter(element.children, `${path}${element.key}.`);
       }
       return '';
     })

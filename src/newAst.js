@@ -20,8 +20,8 @@ const newAst = (file1, file2) => {
     }
     if (_.isPlainObject(value1) && _.isPlainObject(value2)) {
       const controlChanged = 'nested';
-      const value = newAst(value1, value2);
-      return { key, value, controlChanged };
+      const children = newAst(value1, value2);
+      return { key, children, controlChanged };
     }
     if (value1 !== value2) {
       const controlChanged = 'changed';
