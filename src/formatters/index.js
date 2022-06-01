@@ -8,6 +8,8 @@ export default (file1, file2, formatter) => {
       return stylish(newAst(file1, file2));
     case 'plain':
       return plain(newAst(file1, file2));
+    case 'json':
+      return JSON.stringify(newAst(file1, file2));
     default:
       return 'Unknown format';
   }
