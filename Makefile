@@ -8,5 +8,5 @@ gendiff:
 	node bin/gendiff.js
 test:
 	npx jest
-coverage:
+tcoverage:
 	npx jest --coverage
