@@ -23,9 +23,6 @@ const plain = (tree) => {
           const fullPath = path + element.key;
           return `Property '${fullPath}' was removed`;
         }
-        case 'unchanged': {
-          return '';
-        }
         case 'changed': {
           const value1 = stringify(element.value1);
           const value2 = stringify(element.value2);
