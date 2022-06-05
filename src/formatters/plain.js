@@ -16,8 +16,8 @@ const plain = (tree) => {
       switch (element.controlChanged) {
         case 'added': {
           const fullPath = path + element.key;
-          const val = stringify(element.value);
-          return `Property '${fullPath}' was added with value: ${val}`;
+          const value = stringify(element.value);
+          return `Property '${fullPath}' was added with value: ${value}`;
         }
         case 'removed': {
           const fullPath = path + element.key;
