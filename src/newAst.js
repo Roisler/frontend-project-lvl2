@@ -7,34 +7,25 @@ const newAst = (data1, data2) => {
   const resultArr = keys.map((key) => {
     const value1 = data1[key];
     const value2 = data2[key];
-
     if (!_.has(data1, key)) {
-      const controlChanged = 'added';
-      const value = value2;
-      return { key, value, controlChanged };
+      return { key, value: value2, controlChanged: 'added' };
     }
     if (!_.has(data2, key)) {
-      const controlChanged = 'removed';
-      const value = value1;
-      return { key, value, controlChanged };
+      return { key, value: value1, controlChanged: 'removed' };
     }
     if (_.isPlainObject(value1) && _.isPlainObject(value2)) {
-      const controlChanged = 'nested';
       const children = newAst(value1, value2);
-      return { key, children, controlChanged };
+      return { key, children, controlChanged: 'nested' };
     }
     if (value1 !== value2) {
-      const controlChanged = 'changed';
       return {
         key,
         value1,
         value2,
-        controlChanged,
+        controlChanged: 'changed',
       };
     }
-    const controlChanged = 'unchanged';
-    const value = value1;
-    return { key, value, controlChanged };
+    return { key, value: value1, controlChanged: 'unchanged' };
   });
   return resultArr;
 };
