@@ -26,11 +26,10 @@ const plain = (tree) => {
         return '';
       }
       if (element.controlChanged === 'changed') {
-        const [oldValue, newValue] = element.value;
-        const oldVal = stringify(oldValue);
-        const newVal = stringify(newValue);
+        const value1 = stringify(element.value1);
+        const value2 = stringify(element.value2);
         const fullPath = path + element.key;
-        return `Property '${fullPath}' was updated. From ${oldVal} to ${newVal}`;
+        return `Property '${fullPath}' was updated. From ${value1} to ${value2}`;
       }
       if (element.controlChanged === 'nested') {
         return iter(element.children, `${path}${element.key}.`);

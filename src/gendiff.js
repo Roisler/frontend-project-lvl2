@@ -1,18 +1,22 @@
 import { readFileSync } from 'fs';
-import { cwd } from 'process';
-import { resolve } from 'path';
-import { format, parseFile } from './parsers.js';
+import path from 'path';
+import parseData from './parsers.js';
 import getDiffOfFormat from './formatters/index.js';
+import newAst from './newAst.js';
 
-const getFullPath = (filepath) => resolve(cwd(), filepath);
+const getFullPath = (filepath) => path.resolve(process.cwd(), filepath);
+
+const getParsedData = (filepath) => {
+  const dataType = path.extname(filepath).substring(1);
+  const data = readFileSync(getFullPath(filepath), 'utf-8');
+  return parseData(data, dataType);
+};
 
 const genDiff = (filepath1, filepath2, formatter = 'stylish') => {
-  if (filepath1 === '' || filepath2 === '') {
-    return 'Specify the file to be compared';
-  }
-  const file1 = parseFile(readFileSync(getFullPath(filepath1), 'utf-8'), format(filepath1));
-  const file2 = parseFile(readFileSync(getFullPath(filepath2), 'utf-8'), format(filepath2));
-  return getDiffOfFormat(file1, file2, formatter);
+  const parsedData1 = getParsedData(filepath1);
+  const parsedData2 = getParsedData(filepath2);
+  const ast = newAst(parsedData1, parsedData2);
+  return getDiffOfFormat(ast, formatter);
 };
 
 export default genDiff;
