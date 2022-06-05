@@ -16,27 +16,31 @@ const stringify = (tree, depth = 1) => {
 const stylish = (tree) => {
   const iter = (node, depth) => {
     const result = node.map((element) => {
-      if (element.controlChanged === 'added') {
-        const value = stringify(element.value, depth);
-        return `${indent(depth)}+ ${element.key}: ${value}`;
+      switch (element.controlChanged) {
+        case 'added': {
+          const value = stringify(element.value, depth);
+          return `${indent(depth)}+ ${element.key}: ${value}`;
+        }
+        case 'removed': {
+          const value = stringify(element.value, depth);
+          return `${indent(depth)}- ${element.key}: ${value}`;
+        }
+        case 'unchanged': {
+          const value = stringify(element.value, depth + 1);
+          return `${indent(depth)}  ${element.key}: ${value}`;
+        }
+        case 'changed': {
+          const value1 = stringify(element.value1, depth);
+          const value2 = stringify(element.value2, depth);
+          return `${indent(depth)}- ${element.key}: ${value1}\n${indent(depth)}+ ${element.key}: ${value2}`;
+        }
+        case 'nested': {
+          return `${indent(depth)}  ${element.key}: {\n${iter(element.children, depth + 1)}\n${indent(depth)}  }`;
+        }
+        default: {
+          return '';
+        }
       }
-      if (element.controlChanged === 'removed') {
-        const value = stringify(element.value, depth);
-        return `${indent(depth)}- ${element.key}: ${value}`;
-      }
-      if (element.controlChanged === 'unchanged') {
-        const value = stringify(element.value, depth + 1);
-        return `${indent(depth)}  ${element.key}: ${value}`;
-      }
-      if (element.controlChanged === 'changed') {
-        const value1 = stringify(element.value1, depth);
-        const value2 = stringify(element.value2, depth);
-        return `${indent(depth)}- ${element.key}: ${value1}\n${indent(depth)}+ ${element.key}: ${value2}`;
-      }
-      if (element.controlChanged === 'nested') {
-        return `${indent(depth)}  ${element.key}: {\n${iter(element.children, depth + 1)}\n${indent(depth)}  }`;
-      }
-      return '';
     });
     return result.join('\n');
   };
