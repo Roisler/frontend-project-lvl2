@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-const newAst = (data1, data2) => {
+const buildAst = (data1, data2) => {
   const keys1 = Object.keys(data1);
   const keys2 = Object.keys(data2);
   const keys = _.sortBy(_.union(keys1, keys2));
@@ -14,7 +14,7 @@ const newAst = (data1, data2) => {
       return { key, value: value1, controlChanged: 'removed' };
     }
     if (_.isPlainObject(value1) && _.isPlainObject(value2)) {
-      const children = newAst(value1, value2);
+      const children = buildAst(value1, value2);
       return { key, children, controlChanged: 'nested' };
     }
     if (value1 !== value2) {
@@ -30,4 +30,4 @@ const newAst = (data1, data2) => {
   return resultArr;
 };
 
-export default newAst;
+export default buildAst;
