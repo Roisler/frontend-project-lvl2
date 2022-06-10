@@ -34,12 +34,8 @@ const stylish = (tree) => {
           const value2 = stringify(element.value2, depth);
           return `${indent(depth)}- ${element.key}: ${value1}\n${indent(depth)}+ ${element.key}: ${value2}`;
         }
-        case 'nested': {
+        default:
           return `${indent(depth)}  ${element.key}: {\n${iter(element.children, depth + 1)}\n${indent(depth)}  }`;
-        }
-        default: {
-          return '';
-        }
       }
     });
     return result.join('\n');
